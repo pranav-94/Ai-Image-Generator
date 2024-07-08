@@ -62,6 +62,7 @@ app.post('/promptData',async(req,res)=>{
 
     const savePromptData = await prisma.promptData.create({
         data: {
+            promptUser: PData.user,
             promptText: PData.Text,
             promptUrl: PData.Url
         }
@@ -83,5 +84,37 @@ app.get('/allPosts',async(req,res)=>{
         data: allPosts
     })
 })
+
+app.get('/userPrompts',async(req,res)=>{
+    const data = req.body 
+
+    const userData = await prisma.promptData.findMany({
+        where:{
+            promptUser: data.user
+        }
+    })
+
+    res.send(userData)
+})
+
+app.delete('/deleteUser',async(req,res)=>{
+    const data = req.body 
+
+   const deletedRecord =  await prisma.signUp.delete({
+       where:{
+        username: data.username,
+        password: data.password
+       }
+    })
+
+    res.status(200).json({
+        msg: 'done',
+        data: deletedRecord
+    })
+})
+
+// app.delete('/prompts',async(req,res)=>{
+//     await prisma.promptData.deleteMany({})
+// })
 
 app.listen(3000)

@@ -15,12 +15,13 @@ datasource db {
 
 model signUp {
   id Int @unique @default(autoincrement())
-  username String 
-  password String
+  username String @unique
+  password String @unique
 }
 
 model promptData {
   id Int @unique @default(autoincrement())
+  promptUser String @default("default_value")
   promptText String
-  promptUrl String
+  promptUrl String 
 }

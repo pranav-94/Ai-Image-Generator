@@ -58,11 +58,12 @@ app.get('/allData', (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     });
 }));
 app.post('/promptData', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const Pdata = req.body;
+    const PData = req.body;
     const savePromptData = yield prisma.promptData.create({
         data: {
-            promptText: Pdata.Text,
-            promptUrl: Pdata.Url
+            promptUser: PData.user,
+            promptText: PData.Text,
+            promptUrl: PData.Url
         }
     });
     res.json({
@@ -77,4 +78,29 @@ app.get('/allPosts', (req, res) => __awaiter(void 0, void 0, void 0, function* (
         data: allPosts
     });
 }));
+app.get('/userPrompts', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const data = req.body;
+    const userData = yield prisma.promptData.findMany({
+        where: {
+            promptUser: data.user
+        }
+    });
+    res.send(userData);
+}));
+app.delete('/deleteUser', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const data = req.body;
+    const deletedRecord = yield prisma.signUp.delete({
+        where: {
+            username: data.username,
+            password: data.password
+        }
+    });
+    res.status(200).json({
+        msg: 'done',
+        data: deletedRecord
+    });
+}));
+// app.delete('/prompts',async(req,res)=>{
+//     await prisma.promptData.deleteMany({})
+// })
 app.listen(3000);
