@@ -100,7 +100,7 @@ app.delete('/deleteUser', (req, res) => __awaiter(void 0, void 0, void 0, functi
         data: deletedRecord
     });
 }));
-// app.delete('/prompts',async(req,res)=>{
-//     await prisma.promptData.deleteMany({})
-// })
+app.delete('/prompts', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    yield prisma.promptData.deleteMany({});
+}));
 app.listen(3000);

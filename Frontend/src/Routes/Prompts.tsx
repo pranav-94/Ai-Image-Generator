@@ -25,6 +25,7 @@ const Prompts = ()=>{
                 return(
                     <>
                        <p>{item.promptText}</p>
+                       <img src="http://localhost:5173/18ce604f-6d26-42f9-b3f2-89ec92bb40be" alt="" />
                     </>
                 )
             })

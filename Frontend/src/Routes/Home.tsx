@@ -1,16 +1,22 @@
 import { useEffect, useState } from "react";
 import axios from 'axios'
+import { useNavigate } from "react-router-dom";
 
 const Home = ()=>{
 
   const [img ,setImg ] = useState('')
   const [input,setInput] = useState('')
   const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
 
   const apiKey = import.meta.env.REACT_APP_API_KEY
   const apiURL = import.meta.env.REACT_APP_API_URL
 
   const user = localStorage.getItem('username')
+  if(user === null){
+      navigate('/')
+  }
+  console.log(user)
 
   const handleClick=async()=>{
     setLoading(true)
@@ -29,25 +35,24 @@ const Home = ()=>{
       const result = await response.blob();
       return result;
     }
-    query({"inputs": input}).then((response) => {
+    query({"inputs": input}).then(async(response) => {
       if(img === ''){
       }
       const imgUrl = URL.createObjectURL(response)
       setImg(imgUrl)
       setLoading(false)
-      console.log(imgUrl)
-    });
+      console.log(response)
 
-    await axios.post('http://localhost:3000/userPrompts',{
+      await axios.post('http://localhost:3000/promptData',{
       user: user,
       Text: input,
-      Url: img
+      Url: imgUrl
     })
-
+    });
   }
 
   return(
-    <div className="w-[100%] h-[550px] bg-slate-900 text-slate-200 flex justify-center items-center">
+    <div className="w-[100%] h-[550px] bg-slate-100 text-slate-900 flex justify-center items-center">
       <div className="w-[500px] h-[500px] flex justify-evenly items-center flex-col">
         <p className="text-[22px] font-semibold">Ai Image <span className="text-emerald-500" >Generator</span></p>
       <img src={`${img}`} className="w-[300px] h-[300px]"  />

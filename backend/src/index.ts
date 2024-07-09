@@ -113,8 +113,8 @@ app.delete('/deleteUser',async(req,res)=>{
     })
 })
 
-// app.delete('/prompts',async(req,res)=>{
-//     await prisma.promptData.deleteMany({})
-// })
+app.delete('/prompts',async(req,res)=>{
+    await prisma.promptData.deleteMany({})
+})
 
 app.listen(3000)
