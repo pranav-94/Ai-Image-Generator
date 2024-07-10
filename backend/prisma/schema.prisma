@@ -27,3 +27,8 @@ model promptData {
   mimeType String
 }
 
+model file {
+   id Int @unique @default(autoincrement())
+
+}
+

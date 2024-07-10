@@ -1,6 +1,7 @@
 import express from 'express' 
 import cors from 'cors'
 import { PrismaClient } from '@prisma/client'
+import axios from 'axios'
 import multer from 'multer'
 const prisma = new PrismaClient()
 const app = express()
@@ -10,6 +11,7 @@ const upload = multer({ storage: storage });
 
 app.use(cors())
 app.use(express.json())
+app.use(express.urlencoded({extended:false}))
 
 app.get('/',(req,res)=>{
     res.send('hello world')
@@ -124,8 +126,6 @@ app.delete('/deleteUser',async(req,res)=>{
     })
 })
 
-app.delete('/prompts',async(req,res)=>{
-    await prisma.promptData.deleteMany({})
-})
+
 
 app.listen(3000)

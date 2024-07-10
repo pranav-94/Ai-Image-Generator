@@ -22,6 +22,7 @@ const storage = multer_1.default.memoryStorage();
 const upload = (0, multer_1.default)({ storage: storage });
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
+app.use(express_1.default.urlencoded({ extended: false }));
 app.get('/', (req, res) => {
     res.send('hello world');
 });
@@ -108,8 +109,5 @@ app.delete('/deleteUser', (req, res) => __awaiter(void 0, void 0, void 0, functi
         msg: 'done',
         data: deletedRecord
     });
-}));
-app.delete('/prompts', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    yield prisma.promptData.deleteMany({});
 }));
 app.listen(3000);
