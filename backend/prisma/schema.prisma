@@ -23,5 +23,7 @@ model promptData {
   id Int @unique @default(autoincrement())
   promptUser String @default("default_value")
   promptText String
-  promptUrl String 
+  promptUrl Bytes
+  mimeType String
 }
+

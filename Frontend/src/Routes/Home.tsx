@@ -36,18 +36,20 @@ const Home = ()=>{
       return result;
     }
     query({"inputs": input}).then(async(response) => {
-      if(img === ''){
-      }
       const imgUrl = URL.createObjectURL(response)
+      const imgData = new FormData()
+      imgData.append('file',response)
+      imgData.append('user', user);
+      imgData.append('Text', input);
       setImg(imgUrl)
       setLoading(false)
       console.log(response)
+      console.log(imgData)
 
-      await axios.post('http://localhost:3000/promptData',{
-      user: user,
-      Text: input,
-      Url: imgUrl
-    })
+      await axios.post('http://localhost:3000/promptData',imgData, 
+      {headers: {
+        'Content-Type': 'multipart/form-data',
+      }})
     });
   }
 

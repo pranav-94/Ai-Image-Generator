@@ -1,8 +1,12 @@
 import express from 'express' 
 import cors from 'cors'
 import { PrismaClient } from '@prisma/client'
+import multer from 'multer'
 const prisma = new PrismaClient()
 const app = express()
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 app.use(cors())
 app.use(express.json())
@@ -57,14 +61,20 @@ app.get('/allData',async(req,res)=>{
     })
 })
 
-app.post('/promptData',async(req,res)=>{
+app.post('/promptData',upload.single('file'),async(req,res)=>{
     const PData = req.body 
 
+    if (!req.file) {
+        return res.status(400).send('No file uploaded.');
+      }
+
+    const { originalname, mimetype, buffer } = req.file
     const savePromptData = await prisma.promptData.create({
         data: {
             promptUser: PData.user,
             promptText: PData.Text,
-            promptUrl: PData.Url
+            promptUrl: buffer,
+            mimeType: mimetype
         }
     })
 
@@ -79,6 +89,7 @@ app.post('/promptData',async(req,res)=>{
 app.get('/allPosts',async(req,res)=>{
     const allPosts = await prisma.promptData.findMany()
 
+    res.setHeader('Content-Type', 'image/jpeg');
     res.status(200).json({
         msg: 'done',
         data: allPosts
