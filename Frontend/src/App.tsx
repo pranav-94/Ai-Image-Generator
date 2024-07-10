@@ -19,4 +19,3 @@ const App = ()=>{
 
 export default App
 
-//https://v0.dev/t/B7u4D0wBJUH
