@@ -1,8 +1,8 @@
 import express from 'express' 
 import cors from 'cors'
 import { PrismaClient } from '@prisma/client'
-import axios from 'axios'
 import multer from 'multer'
+import userInfo from './zod'
 const prisma = new PrismaClient()
 const app = express()
 
@@ -20,14 +20,28 @@ app.get('/',(req,res)=>{
 app.post('/signUp',async (req,res)=>{
     const userData = req.body
 
-   await prisma.signUp.create({
+    const checkedData:any = userInfo.safeParse({
+        username: userData.username,
+        password: userData.password
+    })
+
+    if(checkedData.success !== true){
+        return res.status(400).json({
+            msg: 'Input validation failed'
+        })
+    }
+
+  const finalData = await prisma.signUp.create({
         data: {
-            username: userData.username,
-            password: userData.password
+            username: checkedData.data.username,
+            password: checkedData.data.password
         }
     })
 
-    res.send('done')
+    res.status(200).json({
+         msg: 'done',
+         data: finalData
+    })
 })
 
 app.post('/signIn',async(req,res)=>{

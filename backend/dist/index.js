@@ -16,6 +16,7 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const client_1 = require("@prisma/client");
 const multer_1 = __importDefault(require("multer"));
+const zod_1 = __importDefault(require("./zod"));
 const prisma = new client_1.PrismaClient();
 const app = (0, express_1.default)();
 const storage = multer_1.default.memoryStorage();
@@ -28,13 +29,25 @@ app.get('/', (req, res) => {
 });
 app.post('/signUp', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const userData = req.body;
-    yield prisma.signUp.create({
+    const checkedData = zod_1.default.safeParse({
+        username: userData.username,
+        password: userData.password
+    });
+    if (checkedData.success !== true) {
+        return res.status(400).json({
+            msg: 'Input validation failed'
+        });
+    }
+    const finalData = yield prisma.signUp.create({
         data: {
-            username: userData.username,
-            password: userData.password
+            username: checkedData.data.username,
+            password: checkedData.data.password
         }
     });
-    res.send('done');
+    res.status(200).json({
+        msg: 'done',
+        data: finalData
+    });
 }));
 app.post('/signIn', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const verifyData = req.body;
