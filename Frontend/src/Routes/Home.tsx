@@ -37,32 +37,27 @@ const Home = ()=>{
     }
     query({"inputs": input}).then(async(response) => {
       const imgUrl = URL.createObjectURL(response)
-      const imgData = new FormData()
-      imgData.append('file',response)
-      imgData.append('user', user);
-      imgData.append('Text', input);
       setImg(imgUrl)
       setLoading(false)
       console.log(response)
-      console.log(imgData)
 
-      await axios.post('http://localhost:3000/promptData',imgData, 
-      {headers: {
-        'Content-Type': 'multipart/form-data',
-      }})
+      await axios.post('http://localhost:3000/promptData',{
+         user: user,
+         Text: input
+      })
     });
   }
 
   return(
-    <div className="w-[100%] h-[550px] bg-slate-100 text-slate-900 flex justify-center items-center">
-      <div className="w-[500px] h-[500px] flex justify-evenly items-center flex-col">
-        <p className="text-[22px] font-semibold">Ai Image <span className="text-emerald-500" >Generator</span></p>
-      <img src={`${img}`} className="w-[300px] h-[300px]"  />
+    <div className="">
+      <div >
+        <p >Ai Image Generator</p>
+      <img src={`${img}`}  />
       {
         loading===true ? <p>loading...</p> : <p></p>
       }
-       <input className="w-[300px] h-[40px] rounded-md text-black" placeholder="Enter Text Here" type="text" onChange={(e)=>{setInput(e.target.value)}}/>
-       <button className="bg-emerald-500 w-[130px] h-[40px] rounded-md text-slate-900 font-bold" onClick={handleClick}>Show Result</button>
+       <input type="text" onChange={(e)=>{setInput(e.target.value)}}/>
+       <button onClick={handleClick}>Show Result</button>
        </div>
     </div>
   )
