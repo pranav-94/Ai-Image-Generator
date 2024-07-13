@@ -1,13 +1,9 @@
 import express from 'express' 
 import cors from 'cors'
 import { PrismaClient } from '@prisma/client'
-import multer from 'multer'
 import userInfo from './zod'
 const prisma = new PrismaClient()
 const app = express()
-
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
 
 app.use(cors())
 app.use(express.json())
@@ -34,6 +30,7 @@ app.post('/signUp',async (req,res)=>{
   const finalData = await prisma.signUp.create({
         data: {
             username: checkedData.data.username,
+            email: checkedData.data.email ,
             password: checkedData.data.password
         }
     })
@@ -77,20 +74,13 @@ app.get('/allData',async(req,res)=>{
     })
 })
 
-app.post('/promptData',upload.single('file'),async(req,res)=>{
+app.post('/promptData',async(req,res)=>{
     const PData = req.body 
 
-    if (!req.file) {
-        return res.status(400).send('No file uploaded.');
-      }
-
-    const { originalname, mimetype, buffer } = req.file
     const savePromptData = await prisma.promptData.create({
         data: {
             promptUser: PData.user,
             promptText: PData.Text,
-            promptUrl: buffer,
-            mimeType: mimetype
         }
     })
 
@@ -102,23 +92,14 @@ app.post('/promptData',upload.single('file'),async(req,res)=>{
     )
 })
 
-app.get('/allPosts',async(req,res)=>{
-    const allPosts = await prisma.promptData.findMany()
-
-    res.setHeader('Content-Type', 'image/jpeg');
-    res.status(200).json({
-        msg: 'done',
-        data: allPosts
-    })
-})
 
 app.get('/userPrompts',async(req,res)=>{
     const data = req.body 
 
     const userData = await prisma.promptData.findMany({
-        where:{
-            promptUser: data.user
-        }
+        // where:{
+        //     promptUser: data.user
+        // }
     })
 
     res.send(userData)

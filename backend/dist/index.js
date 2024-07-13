@@ -15,12 +15,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const client_1 = require("@prisma/client");
-const multer_1 = __importDefault(require("multer"));
 const zod_1 = __importDefault(require("./zod"));
 const prisma = new client_1.PrismaClient();
 const app = (0, express_1.default)();
-const storage = multer_1.default.memoryStorage();
-const upload = (0, multer_1.default)({ storage: storage });
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
@@ -41,6 +38,7 @@ app.post('/signUp', (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     const finalData = yield prisma.signUp.create({
         data: {
             username: checkedData.data.username,
+            email: checkedData.data.email,
             password: checkedData.data.password
         }
     });
@@ -74,18 +72,12 @@ app.get('/allData', (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         data: allData
     });
 }));
-app.post('/promptData', upload.single('file'), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.post('/promptData', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const PData = req.body;
-    if (!req.file) {
-        return res.status(400).send('No file uploaded.');
-    }
-    const { originalname, mimetype, buffer } = req.file;
     const savePromptData = yield prisma.promptData.create({
         data: {
             promptUser: PData.user,
             promptText: PData.Text,
-            promptUrl: buffer,
-            mimeType: mimetype
         }
     });
     res.json({
@@ -93,20 +85,12 @@ app.post('/promptData', upload.single('file'), (req, res) => __awaiter(void 0, v
         data: savePromptData
     });
 }));
-app.get('/allPosts', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const allPosts = yield prisma.promptData.findMany();
-    res.setHeader('Content-Type', 'image/jpeg');
-    res.status(200).json({
-        msg: 'done',
-        data: allPosts
-    });
-}));
 app.get('/userPrompts', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const data = req.body;
     const userData = yield prisma.promptData.findMany({
-        where: {
-            promptUser: data.user
-        }
+    // where:{
+    //     promptUser: data.user
+    // }
     });
     res.send(userData);
 }));
