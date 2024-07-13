@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import axios from 'axios'
 import { useNavigate } from "react-router-dom";
+import Navbar from "../Components/Navbar";
+import Nav from "../Components/Navbar(mobile)";
 
 const Home = ()=>{
 
@@ -20,7 +22,7 @@ const Home = ()=>{
 
   const handleClick=async()=>{
     setLoading(true)
-    async function query(data) {
+    async function query(data:any) {
       const response = await fetch(
         `${apiURL}`,
         {
@@ -48,18 +50,39 @@ const Home = ()=>{
     });
   }
 
+  const handleDownload = ()=>{
+    const a = document.createElement('a')
+    a.href = img 
+    a.download = 'downloadImg.jpg'
+    console.log(a.href)
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    }
+
   return(
-    <div className="">
-      <div >
-        <p >Ai Image Generator</p>
-      <img src={`${img}`}  />
+    <div className="bg-slate-300 md:flex">
+      <Navbar/>
+    <div className= "md:w-[75%] flex flex-col">
+     <div className="w-[100%] h-[100px] flex justify-between items-center bg-slate-200">
+        <p className="ml-[30px]">Ai Image Generator</p>
+        <Nav/>
+     </div>
+     <div className="w-[100%]  h-auto flex flex-col items-center justify-evenly">
+      <div className="md:w-[80%] w-[100%]  h-[130px] items-center flex flex-col md:items-end justify-evenly ">
+       <input className="bg-slate-500 md:w-[100%] w-[80%] rounded-md pl-[10px] h-[40px]" type="text" placeholder="Enter a prompt to generate an image" onChange={(e)=>{setInput(e.target.value)}}/>
+       <button className="rounded-md bg-slate-500 w-[150px] h-[35px]" onClick={handleClick}>Show Result</button>
+       </div>
+      <div className="w-[100%] flex-col pb-[50px]  h-auto bg-slate-600 flex items-center justify-evenly">
       {
         loading===true ? <p>loading...</p> : <p></p>
       }
-       <input type="text" onChange={(e)=>{setInput(e.target.value)}}/>
-       <button onClick={handleClick}>Show Result</button>
-       </div>
+       <img src={`${img}`} className="w-[350px] h-[350px] md:w-[400px] md:h-[400px]" />
+       <button onClick={handleDownload}>Download</button>
     </div>
+       </div>
+       </div>
+       </div>
   )
 }
 

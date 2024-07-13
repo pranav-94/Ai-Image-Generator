@@ -2,6 +2,7 @@ import { Route,Routes } from "react-router-dom";
 import SignUp from "./Routes/Signup";
 import Home from "./Routes/Home";
 import SignIn from "./Routes/Signin";
+import Settings from "./Routes/Settings";
 
 const App = ()=>{
   return(
@@ -10,6 +11,7 @@ const App = ()=>{
         <Route Component={SignUp} path="/"/>
         <Route Component={SignIn} path="/signin"/>        
         <Route Component={Home} path="/home"/>
+        <Route Component={Settings} path="/settings"/>
       </Routes>
     </>
   )

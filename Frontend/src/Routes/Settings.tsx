@@ -1,5 +1,6 @@
 import axios from "axios"
 import { useState } from "react"
+import Navbar from "../Components/Navbar"
 
 const Settings  = ()=>{
 
@@ -13,11 +14,13 @@ const handleClick = async()=>{
         password: password
     })
 }
-
-    return(
-        <>
-           <button onClick={handleClick}>Delete User</button>
-        </>
+           return(
+    <div className="bg-slate-300 md:flex">
+      <Navbar/>
+    <div className= "md:w-[75%] flex flex-col">
+          <button onClick={handleClick}>Delete</button>
+       </div>
+       </div>
     )
 }
 
