@@ -22,6 +22,11 @@ const Home = ()=>{
   console.log(user)
 
   const handleClick=async()=>{
+
+    if(input === ''){
+     return alert('Enter prompt first')
+    }
+
     setLoading(true)
     async function query(data:any) {
       const response = await fetch(
@@ -86,7 +91,10 @@ const Home = ()=>{
         loading===true ? <p>loading...</p> : <p></p>
       }
        <img src={`${img}`} className="w-[350px] h-[350px] md:w-[400px] md:h-[400px]" />
-       <button className={`rounded-md  w-[150px] h-[35px] ${mode===true ? "bg-teal-400 text-slate-900" : "bg-slate-900 text-white"}`} onClick={handleDownload}>Download</button>
+       {
+        img==='' ? 
+        <></> : <button className={`rounded-md  w-[150px] h-[35px] mt-5 ${mode===true ? "bg-teal-400 text-slate-900" : "bg-slate-900 text-white"}`} onClick={handleDownload}>Download</button>
+}
     </div>
        </div>
        </div>
