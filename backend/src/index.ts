@@ -18,6 +18,7 @@ app.post('/signUp',async (req,res)=>{
 
     const checkedData:any = userInfo.safeParse({
         username: userData.username,
+        email: userData.email,
         password: userData.password
     })
 
@@ -97,9 +98,9 @@ app.get('/userPrompts',async(req,res)=>{
     const data = req.body 
 
     const userData = await prisma.promptData.findMany({
-        // where:{
-        //     promptUser: data.user
-        // }
+        where:{
+            promptUser: data.user
+        }
     })
 
     res.send(userData)

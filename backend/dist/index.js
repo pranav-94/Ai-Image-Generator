@@ -28,6 +28,7 @@ app.post('/signUp', (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     const userData = req.body;
     const checkedData = zod_1.default.safeParse({
         username: userData.username,
+        email: userData.email,
         password: userData.password
     });
     if (checkedData.success !== true) {
