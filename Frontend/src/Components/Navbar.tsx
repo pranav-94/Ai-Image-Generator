@@ -1,12 +1,16 @@
 import { useNavigate } from "react-router-dom"
+import Recent from "./RecentSearchImg"
 
-const Navbar = ()=>{
+const Navbar = ({mode})=>{
+    const username = localStorage.getItem('username')
+
     return(
         <>
-           <div className="hidden md:flex flex-col  w-[25%] h-[100%] bg-slate-50">
+           <div className="hidden md:flex flex-col  sticky top-0 w-[25%] h-[100%] items-center border-r-2 ">
               <TopSection/>
-              <MiddleSection/>
-              <BottomSection/>
+              <MiddleSection mode={mode}/>
+              <Recent username={username}/>
+              <LogOut mode={mode}/>
            </div>
         </>
     )
@@ -16,11 +20,12 @@ const TopSection = ()=>{
     return(
         <div className="w-[100%] h-[100px]">
            <p>Header</p>
+           {/* <Mode/> */}
         </div>
     )
 }
 
-const MiddleSection = ()=>{
+const MiddleSection = ({mode})=>{
     const navigate = useNavigate()
 
     const handleImg = ()=>{
@@ -32,20 +37,27 @@ const MiddleSection = ()=>{
     }
 
     return(
-        <div className="w-[100%] h-[300px] flex flex-col justify-evenly ">
-          <p onClick={handleImg}>Image Generator</p>
-          <p >Text Generator</p>
-          <p onClick={handleSettings}>Settings</p>
+        <div className="w-[90%] text-[18px] h-[200px] flex flex-col justify-evenly items-start  ">
+          <p onClick={handleImg} className={`hover:bg-slate-500 p-[20px]  h-[40px] rounded-md flex items-center cursor-pointer justify-start ${mode===true? "hover:bg-slate-200 hover:text-slate-900": "hover:bg-slate-900 hover:text-slate-200" }`}>Image Generator</p>
+          <p className={`hover:bg-slate-500 p-[20px]  h-[40px] rounded-md flex items-center cursor-pointer justify-start ${mode===true? "hover:bg-slate-200 hover:text-slate-900": "hover:bg-slate-900 hover:text-slate-200" }`}>Text Generator</p>
+          <p className={`hover:bg-slate-500 p-[20px]  h-[40px] rounded-md flex items-center cursor-pointer justify-start ${mode===true? "hover:bg-slate-200 hover:text-slate-700": "hover:bg-slate-900 hover:text-slate-200" }`} onClick={handleSettings}>Settings</p>
         </div>
     )
-}
+    }
 
-const BottomSection = ()=>{
-    return(
-        <div>
-           <p>History of user</p>
-        </div>
-    )
-}
+    const LogOut = ({mode})=>{
+        const navigate = useNavigate()
+
+        const handleLog = ()=>{
+            localStorage.removeItem('username')
+            navigate('/')
+        }
+
+        return(
+            <>
+            <button className={`rounded-md  w-[150px] h-[35px] ${mode===true ? "bg-teal-400 text-slate-900" : "bg-slate-900 text-white"}`} onClick={handleLog}>Log-out</button>
+            </>
+        )
+    }
 
 export default Navbar

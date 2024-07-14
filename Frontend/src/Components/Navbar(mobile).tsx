@@ -9,7 +9,7 @@ const handleNav=()=>{
 }
 
     return(
-        <div>
+        <div className="ml-3">
           <p onClick={handleNav} className="md:hidden  mr-[30px]">Menu</p>
           {
             click===true ? <NavItems/> : <></>

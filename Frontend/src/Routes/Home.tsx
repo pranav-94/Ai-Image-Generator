@@ -9,6 +9,7 @@ const Home = ()=>{
   const [img ,setImg ] = useState('')
   const [input,setInput] = useState('')
   const [loading, setLoading] = useState(false)
+  const [mode,setMode] = useState(false)
   const navigate = useNavigate()
 
   const apiKey = import.meta.env.REACT_APP_API_KEY
@@ -16,7 +17,7 @@ const Home = ()=>{
 
   const user = localStorage.getItem('username')
   if(user === null){
-      navigate('/')
+     return navigate('/')
   }
   console.log(user)
 
@@ -60,25 +61,32 @@ const Home = ()=>{
     document.body.removeChild(a)
     }
 
+    const handleMode =()=>{
+      setMode(!mode)
+    }
+
   return(
-    <div className="bg-slate-300 md:flex">
-      <Navbar/>
-    <div className= "md:w-[75%] flex flex-col">
-     <div className="w-[100%] h-[100px] flex justify-between items-center bg-slate-200">
-        <p className="ml-[30px]">Ai Image Generator</p>
+    <div className={`${mode===true? 'bg-slate-800 text-slate-100' : 'bg-slate-100 text-slate-900'} md:flex sticky top-0`}>
+          <Navbar mode={mode}/>
+    <div className= {`md:w-[75%] flex flex-col`}>
+     <div className="w-[100%] h-[100px] flex justify-between items-center ">
+        <p className="md:ml-[100px] ml-[30px]">Ai Image Generator</p>
+        <div className="flex ">
+        <p className="flex md:mr-[100px]" onClick={handleMode}>Mode</p>
         <Nav/>
+        </div>
      </div>
      <div className="w-[100%]  h-auto flex flex-col items-center justify-evenly">
       <div className="md:w-[80%] w-[100%]  h-[130px] items-center flex flex-col md:items-end justify-evenly ">
-       <input className="bg-slate-500 md:w-[100%] w-[80%] rounded-md pl-[10px] h-[40px]" type="text" placeholder="Enter a prompt to generate an image" onChange={(e)=>{setInput(e.target.value)}}/>
-       <button className="rounded-md bg-slate-500 w-[150px] h-[35px]" onClick={handleClick}>Show Result</button>
+       <input className=" md:w-[100%] w-[80%] rounded-md pl-[10px] h-[40px] bg-slate-600" type="text" placeholder="Enter a prompt to generate an image" onChange={(e)=>{setInput(e.target.value)}}/>
+       <button className={`rounded-md  w-[150px] h-[35px] ${mode===true ? "bg-teal-400 text-slate-900" : "bg-slate-900 text-white"}`} onClick={handleClick}>Show Result</button>
        </div>
-      <div className="w-[100%] flex-col pb-[50px]  h-auto bg-slate-600 flex items-center justify-evenly">
+      <div className="w-[100%] flex-col pb-[50px]  h-auto  flex items-center justify-evenly">
       {
         loading===true ? <p>loading...</p> : <p></p>
       }
        <img src={`${img}`} className="w-[350px] h-[350px] md:w-[400px] md:h-[400px]" />
-       <button onClick={handleDownload}>Download</button>
+       <button className={`rounded-md  w-[150px] h-[35px] ${mode===true ? "bg-teal-400 text-slate-900" : "bg-slate-900 text-white"}`} onClick={handleDownload}>Download</button>
     </div>
        </div>
        </div>

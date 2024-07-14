@@ -1,6 +1,7 @@
 import { useState } from "react"
 import axios from 'axios'
 import { useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 const SignUp = ()=>{
 
@@ -28,6 +29,7 @@ const SignUp = ()=>{
            <input type="text" onChange={e=>{setEmail(e.target.value)}} placeholder="Email"/>
            <input type="text" onChange={e=>{setPassword(e.target.value)}} placeholder="Password"/>
            <button onClick={handleClick}>Submit</button>
+           <Link to={'/signin'} >Already have an account?</Link>
         </>
     )
 }
