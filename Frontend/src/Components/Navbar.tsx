@@ -6,7 +6,7 @@ const Navbar = ({mode})=>{
 
     return(
         <>
-           <div className="hidden md:flex flex-col  sticky top-0 w-[25%] h-[100%] items-center border-r-2 ">
+           <div className="hidden md:flex flex-col overflow-scroll w-[25%]  items-center border-r-2 ">
               <TopSection/>
               <MiddleSection mode={mode}/>
               <Recent username={username}/>

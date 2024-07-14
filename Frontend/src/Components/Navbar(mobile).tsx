@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-const Nav = ()=>{
+const Nav = ({mode})=>{
 
     const [click,setClick] = useState(false)
 
@@ -20,7 +20,7 @@ const handleNav=()=>{
 
 const NavItems =()=>{
     return(
-        <div className=" bg-white">
+        <div className={` flex flex-col justify-evenly items-start sticky top-[150px]`}>
            <p>Image Generator</p>
            <p>Text Generator</p>
            <p>Settings</p>

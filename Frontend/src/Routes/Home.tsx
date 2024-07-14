@@ -71,14 +71,15 @@ const Home = ()=>{
     }
 
   return(
-    <div className={`${mode===true? 'bg-slate-800 text-slate-100' : 'bg-slate-100 text-slate-900'} md:flex sticky top-0`}>
-          <Navbar mode={mode}/>
-    <div className= {`md:w-[75%] flex flex-col`}>
+    <div className={`${mode===true? 'bg-slate-800 text-slate-100' : 'bg-slate-100 text-slate-900'} md:w-[100%] md:flex`}>
+      <Navbar mode={mode}/>
+    <div className= {`md:w-[75%] flex flex-col sticky top-0 md:h-[700px] md:overflow-scroll`}>
+    <div >
      <div className="w-[100%] h-[100px] flex justify-between items-center ">
         <p className="md:ml-[100px] ml-[30px]">Ai Image Generator</p>
         <div className="flex ">
         <p className="flex md:mr-[100px]" onClick={handleMode}>Mode</p>
-        <Nav/>
+        <Nav mode={mode}/>
         </div>
      </div>
      <div className="w-[100%]  h-auto flex flex-col items-center justify-evenly">
@@ -96,6 +97,7 @@ const Home = ()=>{
         <></> : <button className={`rounded-md  w-[150px] h-[35px] mt-5 ${mode===true ? "bg-teal-400 text-slate-900" : "bg-slate-900 text-white"}`} onClick={handleDownload}>Download</button>
 }
     </div>
+       </div>
        </div>
        </div>
        </div>
