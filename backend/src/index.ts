@@ -1,6 +1,9 @@
 import express from 'express' 
 import cors from 'cors'
 import { PrismaClient } from '@prisma/client'
+import bcrypt from 'bcrypt'
+import bodyParser from 'body-parser'
+import jwt from 'jsonwebtoken'
 import userInfo from './zod'
 const prisma = new PrismaClient()
 const app = express()
@@ -8,6 +11,9 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
+
+const JWT_KEY = process.env.JWT_KEY
+console.log(JWT_KEY)
 
 app.get('/',(req,res)=>{
     res.send('hello world')
@@ -28,11 +34,13 @@ app.post('/signUp',async (req,res)=>{
         })
     }
 
+    const hashedPass = await bcrypt.hash(checkedData.data.password,10)
+
   const finalData = await prisma.signUp.create({
         data: {
             username: checkedData.data.username,
             email: checkedData.data.email ,
-            password: checkedData.data.password
+            password: hashedPass
         }
     })
 
@@ -48,14 +56,21 @@ app.post('/signIn',async(req,res)=>{
 
     const verifyDb = await prisma.signUp.findFirst({
         where: {
-            username: verifyData.username,
-            password: verifyData.password
+            username: verifyData.username
         }
     })
 
     if(verifyDb === null){
         return res.status(400).json({
             msg: 'incorrect inputs'
+        })
+    }
+
+    const verifyPassword = await bcrypt.compare(verifyData.password,verifyDb.password)
+
+    if(!verifyPassword){
+        return res.status(400).json({
+            msg: 'incorrect password'
         })
     }
 
@@ -100,6 +115,9 @@ app.get('/userPrompts',async(req,res)=>{
     const userData = await prisma.promptData.findMany({
         where:{
             promptUser: data.user
+        },
+        orderBy:{
+            id :'desc'
         }
     })
 
@@ -111,15 +129,26 @@ app.delete('/deleteUser',async(req,res)=>{
 
    const deletedRecord =  await prisma.signUp.delete({
        where:{
-        username: data.username,
-        password: data.password
+        username: data.username
        }
+    })
+
+    const deleteUserPrompts = await prisma.promptData.deleteMany({
+        where:{
+            promptUser: data.username
+        }
     })
 
     res.status(200).json({
         msg: 'done',
         data: deletedRecord
     })
+})
+
+app.get('/allPrompts',async(req,res)=>{
+   const data =  await prisma.promptData.findMany({})
+
+   res.send(data)
 })
 
 

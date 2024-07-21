@@ -15,12 +15,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const client_1 = require("@prisma/client");
+const bcrypt_1 = __importDefault(require("bcrypt"));
 const zod_1 = __importDefault(require("./zod"));
 const prisma = new client_1.PrismaClient();
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
+const JWT_KEY = process.env.JWT_KEY;
+console.log(JWT_KEY);
 app.get('/', (req, res) => {
     res.send('hello world');
 });
@@ -36,11 +39,12 @@ app.post('/signUp', (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             msg: 'Input validation failed'
         });
     }
+    const hashedPass = yield bcrypt_1.default.hash(checkedData.data.password, 10);
     const finalData = yield prisma.signUp.create({
         data: {
             username: checkedData.data.username,
             email: checkedData.data.email,
-            password: checkedData.data.password
+            password: hashedPass
         }
     });
     res.status(200).json({
@@ -52,13 +56,18 @@ app.post('/signIn', (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     const verifyData = req.body;
     const verifyDb = yield prisma.signUp.findFirst({
         where: {
-            username: verifyData.username,
-            password: verifyData.password
+            username: verifyData.username
         }
     });
     if (verifyDb === null) {
         return res.status(400).json({
             msg: 'incorrect inputs'
+        });
+    }
+    const verifyPassword = yield bcrypt_1.default.compare(verifyData.password, verifyDb.password);
+    if (!verifyPassword) {
+        return res.status(400).json({
+            msg: 'incorrect password'
         });
     }
     res.status(200).json({
@@ -89,9 +98,12 @@ app.post('/promptData', (req, res) => __awaiter(void 0, void 0, void 0, function
 app.get('/userPrompts', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const data = req.body;
     const userData = yield prisma.promptData.findMany({
-    // where:{
-    //     promptUser: data.user
-    // }
+        where: {
+            promptUser: data.user
+        },
+        orderBy: {
+            id: 'desc'
+        }
     });
     res.send(userData);
 }));
@@ -99,13 +111,21 @@ app.delete('/deleteUser', (req, res) => __awaiter(void 0, void 0, void 0, functi
     const data = req.body;
     const deletedRecord = yield prisma.signUp.delete({
         where: {
-            username: data.username,
-            password: data.password
+            username: data.username
+        }
+    });
+    const deleteUserPrompts = yield prisma.promptData.deleteMany({
+        where: {
+            promptUser: data.username
         }
     });
     res.status(200).json({
         msg: 'done',
         data: deletedRecord
     });
+}));
+app.get('/allPrompts', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const data = yield prisma.promptData.findMany({});
+    res.send(data);
 }));
 app.listen(3000);
