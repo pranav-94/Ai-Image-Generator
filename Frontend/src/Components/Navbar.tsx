@@ -6,8 +6,8 @@ const Navbar = ({mode})=>{
 
     return(
         <>
-           <div className="hidden md:flex flex-col overflow-scroll w-[25%]  items-center border-r-2 ">
-              <TopSection/>
+           <div className="hidden md:flex flex-col  w-[25%]  items-center border-r-2 ">
+              <TopSection username={username}/>
               <MiddleSection mode={mode}/>
               <Recent username={username}/>
               <LogOut mode={mode}/>
@@ -16,11 +16,11 @@ const Navbar = ({mode})=>{
     )
 }
 
-const TopSection = ()=>{
+const TopSection = ({username})=>{
     return(
-        <div className="w-[100%] h-[100px]">
+        <div className="w-[100%] h-[100px] flex justify-evenly">
            <p>Header</p>
-           {/* <Mode/> */}
+           <p>{username}</p>
         </div>
     )
 }
@@ -36,10 +36,14 @@ const MiddleSection = ({mode})=>{
         navigate("/settings")
     }
 
+    const handleText = ()=>{
+        navigate("/text-generator")
+    }
+
     return(
         <div className="w-[90%] text-[18px] h-[200px] flex flex-col justify-evenly items-start  ">
           <p onClick={handleImg} className={`hover:bg-slate-500 border-[1px] border-slate-900 w-[150px] pl-2  h-[40px] rounded-md flex items-center cursor-pointer justify-start ${mode===true? "hover:bg-slate-100 border-slate-200 border-[1px] hover:text-slate-900": "hover:bg-slate-900 hover:text-slate-200" }`}>Image Generator</p>
-          <p className={`hover:bg-slate-500 border-[1px] border-slate-900 w-[150px] pl-2  h-[40px] rounded-md flex items-center cursor-pointer justify-start ${mode===true? "hover:bg-slate-100 border-slate-200 border-[1px] hover:text-slate-900": "hover:bg-slate-900 hover:text-slate-200" }`}>Text Generator</p>
+          <p className={`hover:bg-slate-500 border-[1px] border-slate-900 w-[150px] pl-2  h-[40px] rounded-md flex items-center cursor-pointer justify-start ${mode===true? "hover:bg-slate-100 border-slate-200 border-[1px] hover:text-slate-900": "hover:bg-slate-900 hover:text-slate-200" }`} onClick={handleText}>Text Generator</p>
           <p className={`hover:bg-slate-500 border-[1px] border-slate-900 w-[150px] pl-2  h-[40px] rounded-md flex items-center cursor-pointer justify-start ${mode===true? "hover:bg-slate-100 border-slate-200 border-[1px] hover:text-slate-700": "hover:bg-slate-900 hover:text-slate-200" }`} onClick={handleSettings}>Settings</p>
         </div>
     )

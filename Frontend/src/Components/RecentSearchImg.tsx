@@ -28,7 +28,7 @@ const Recent = ({username})=>{
               prompt.map((item)=>{
                 return(
                     <>
-                       <p className="w-[100%] h-[30px] mt-2 mb-2 text-[16px] flex items-center  cursor-pointer" onClick={handleData}>{item.promptText}</p>
+                       <p className=" h-[35px] mt-2 mb-2 text-[16px] flex items-center p-3 w-max hover:bg-slate-300 rounded-md  cursor-pointer" onClick={handleData}>{item.promptText}</p>
                     </>
                 )
               })

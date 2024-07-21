@@ -3,7 +3,7 @@ import { useState } from "react"
 import Navbar from "../Components/Navbar"
 import NavItems from "../Components/NavItemsMobile"
 
-const Settings  = ()=>{
+const NavComplete  = ()=>{
 
     const[password,getPassword ] = useState('')
     const [mode,setMode] = useState(false)
@@ -41,14 +41,18 @@ const handleMode =()=>{
 
       </div>
    </div>
-   <div className="w-[100%] items-center bg-slate-500 flex flex-col">
-        <input className="pl-[5px]" type="text" placeholder="Enter password" onChange={e=>{getPassword(e.target.value)}}/>
+   {/* <div className=" md:flex bg-black">
+    <div className= "md:w-[75%] flex flex-col items-center">
+        <div className="w-[50%] bg-black flex flex-col">
           <button onClick={handleClick}>Delete</button>
+          <input className="w-[50%]" type="text" placeholder="Enter password" onChange={e=>{getPassword(e.target.value)}}/>
           </div>
+       </div>
+       </div> */}
   </div>
   </div>
   </div>
     )
 }
 
-export default Settings
+export default NavComplete

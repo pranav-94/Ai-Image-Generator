@@ -3,6 +3,7 @@ import axios from 'axios'
 import { useNavigate } from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import NavItems from "../Components/NavItemsMobile";
+import Download from "../Components/DownloadImg";
 
 const Home = ()=>{
 
@@ -58,16 +59,6 @@ const Home = ()=>{
     });
   }
 
-  const handleDownload = ()=>{
-    const a = document.createElement('a')
-    a.href = img 
-    a.download = 'downloadImg.jpg'
-    console.log(a.href)
-    document.body.appendChild(a)
-    a.click()
-    document.body.removeChild(a)
-    }
-
     const handleMode =()=>{
       setMode(!mode)
     }
@@ -79,7 +70,7 @@ const Home = ()=>{
   return(
     <div className={`${mode===true? 'bg-slate-800 text-slate-100' : 'bg-slate-100 text-slate-900'} md:w-[100%] md:flex`}>
       <Navbar mode={mode}/>
-    <div className= {`md:w-[75%] flex flex-col sticky top-0 md:h-[700px] md:overflow-scroll`}>
+    <div className= {`md:w-[75%] flex flex-col sticky top-0 md:h-[700px] `}>
     <div >
      <div className="w-[100%] h-[100px] flex justify-between items-center ">
         <p className="md:ml-[100px] ml-[30px]">Ai Image Generator</p>
@@ -101,10 +92,10 @@ const Home = ()=>{
       {
         loading===true ? <p>loading...</p> : <p></p>
       }
-       <img src={`${img}`} className="w-[350px] h-[350px] md:w-[400px] md:h-[400px]" />
+       <img src={`${img}`} className="w-[350px] h-[350px] md:w-[400px] md:h-[400px] rounded-md" />
        {
         img==='' ? 
-        <></> : <button className={`rounded-md  w-[150px] h-[35px] mt-5 ${mode===true ? "bg-teal-400 text-slate-900" : "bg-slate-900 text-white"}`} onClick={handleDownload}>Download</button>
+        <></> : <Download img={img} mode={mode}/>
 }
     </div>
        </div>
