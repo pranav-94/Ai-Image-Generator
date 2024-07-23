@@ -1,14 +1,15 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 
-const Recent = ({username})=>{
+const Recent = ()=>{
 
     const [prompt,setPrompt] = useState([])
+    const username = localStorage.getItem('username')
 
     useEffect(()=>{
         const recent =async()=>{
            const response = await axios.get("http://localhost:3000/userPrompts",{
-               username:username
+          params:{  user: username}
            })
 
             setPrompt(response.data)
