@@ -110,11 +110,11 @@ app.post('/promptData',async(req,res)=>{
 
 
 app.get('/userPrompts',async(req,res)=>{
-    const data = req.body 
+    const data:any = req.query.user
 
     const userData = await prisma.promptData.findMany({
         where:{
-            promptUser: data.user
+            promptUser: data
         },
         orderBy:{
             id :'desc'
@@ -151,6 +151,32 @@ app.get('/allPrompts',async(req,res)=>{
    res.send(data)
 })
 
+app.post('/textData',async(req,res)=>{
+    const data = req.body 
 
+    const checkCreate = await prisma.textData.create({
+        data: {
+            promptUser: data.username ,
+            promptText: data.input,
+            promptResult: data.output
+        }
+    })
+
+    res.send(checkCreate)
+    
+})
+
+app.get('/userTexts',async(req,res)=>{
+
+    const data:any = req.params
+
+    const userText = await prisma.textData.findMany({
+        // where :{
+        //     promptUser: data.username
+        // }
+    })
+
+    res.send(userText)
+})
 
 app.listen(3000)

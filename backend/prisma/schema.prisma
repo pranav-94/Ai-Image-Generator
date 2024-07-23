@@ -26,4 +26,11 @@ model promptData {
   promptText String
 }
 
+model TextData {
+  id Int @unique @default(autoincrement())
+  promptUser String @default("default_value")
+  promptText String
+  promptResult String
+}
+
 

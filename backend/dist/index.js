@@ -96,10 +96,10 @@ app.post('/promptData', (req, res) => __awaiter(void 0, void 0, void 0, function
     });
 }));
 app.get('/userPrompts', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const data = req.body;
+    const data = req.query.user;
     const userData = yield prisma.promptData.findMany({
         where: {
-            promptUser: data.user
+            promptUser: data
         },
         orderBy: {
             id: 'desc'
@@ -127,5 +127,25 @@ app.delete('/deleteUser', (req, res) => __awaiter(void 0, void 0, void 0, functi
 app.get('/allPrompts', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const data = yield prisma.promptData.findMany({});
     res.send(data);
+}));
+app.post('/textData', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const data = req.body;
+    const checkCreate = yield prisma.textData.create({
+        data: {
+            promptUser: data.username,
+            promptText: data.input,
+            promptResult: data.output
+        }
+    });
+    res.send(checkCreate);
+}));
+app.get('/userTexts', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const data = req.params;
+    const userText = yield prisma.textData.findMany({
+    // where :{
+    //     promptUser: data.username
+    // }
+    });
+    res.send(userText);
 }));
 app.listen(3000);
