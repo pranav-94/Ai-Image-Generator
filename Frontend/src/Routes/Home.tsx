@@ -1,17 +1,24 @@
-import {  useState } from "react";
+import {  useContext, useState } from "react";
 import axios from 'axios'
 import { useNavigate } from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import NavItems from "../Components/NavItemsMobile";
+import { ToastContainer,toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import Download from "../Components/DownloadImg";
+import Mode from "../Components/Mode";
+import {useRecoilState,useRecoilValue} from 'recoil'
+import { modeAtom } from '../Recoil/atoms'
+// import { MyContext } from "../Recoil/ModeContext";
 
 const Home = ()=>{
 
   const [img ,setImg ] = useState('')
   const [input,setInput] = useState('')
   const [loading, setLoading] = useState(false)
-  const [mode,setMode] = useState(false)
   const [click,setClick] = useState(false)
+  const mode = useRecoilValue(modeAtom)
+  // console.log(mode)
 
   const navigate = useNavigate()
 
@@ -27,7 +34,7 @@ const Home = ()=>{
   const handleClick=async()=>{
 
     if(input === ''){
-     return alert('Enter prompt first')
+     return toast('Enter prompt first')
     }
 
     setLoading(true)
@@ -59,9 +66,9 @@ const Home = ()=>{
     });
   }
 
-    const handleMode =()=>{
-      setMode(!mode)
-    }
+    // const handleMode =()=>{
+    //   setMode(!mode)
+    // }
 
     const handleNav=()=>{
       setClick(!click)
@@ -75,9 +82,9 @@ const Home = ()=>{
      <div className="w-[100%] h-[100px] flex justify-between items-center ">
         <p className="md:ml-[100px] ml-[30px]">Ai Image Generator</p>
         <div className="flex ">
-        <p className="flex md:mr-[100px]" onClick={handleMode}>Mode</p>
+        {/* <p className="flex md:mr-[100px]" onClick={handleMode}>Mode</p> */}
         <p onClick={handleNav} className="md:hidden  mr-[30px]">Menu</p>
-
+        <Mode/>
         </div>
      </div>
      {
@@ -101,6 +108,7 @@ const Home = ()=>{
        </div>
        </div>
        </div>
+       <ToastContainer/>
        </div>
   )
 }
