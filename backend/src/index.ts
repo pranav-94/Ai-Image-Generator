@@ -5,6 +5,7 @@ import bcrypt from 'bcrypt'
 import bodyParser from 'body-parser'
 import jwt from 'jsonwebtoken'
 import userInfo from './zod'
+import auth from './auth'
 const prisma = new PrismaClient()
 const app = express()
 
@@ -12,7 +13,7 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 
-const JWT_KEY = process.env.JWT_KEY
+const JWT_KEY:any = process.env.JWT_KEY
 console.log(JWT_KEY)
 
 app.get('/',(req,res)=>{
@@ -74,13 +75,16 @@ app.post('/signIn',async(req,res)=>{
         })
     }
 
+    const token = jwt.sign({username:verifyDb.username},JWT_KEY,{expiresIn:'1h'})
+
     res.status(200).json({
         msg: 'found',
-        data: verifyDb
+        data: verifyDb,
+        token: token
     })
 })
 
-app.get('/allData',async(req,res)=>{
+app.get('/allData',auth,async(req,res)=>{
 
     const allData = await prisma.signUp.findMany()
 

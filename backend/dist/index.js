@@ -16,7 +16,9 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const client_1 = require("@prisma/client");
 const bcrypt_1 = __importDefault(require("bcrypt"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const zod_1 = __importDefault(require("./zod"));
+const auth_1 = __importDefault(require("./auth"));
 const prisma = new client_1.PrismaClient();
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
@@ -70,12 +72,14 @@ app.post('/signIn', (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             msg: 'incorrect password'
         });
     }
+    const token = jsonwebtoken_1.default.sign({ username: verifyDb.username }, JWT_KEY, { expiresIn: '1h' });
     res.status(200).json({
         msg: 'found',
-        data: verifyDb
+        data: verifyDb,
+        token: token
     });
 }));
-app.get('/allData', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.get('/allData', auth_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const allData = yield prisma.signUp.findMany();
     res.json({
         msg: 'success',
@@ -153,15 +157,15 @@ app.get('/userTexts', (req, res) => __awaiter(void 0, void 0, void 0, function* 
     });
     res.send(userText);
 }));
-app.put('/upDateData', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const data = req.body;
-    yield prisma.signUp.update({
-        where: {
-            username: data.username
-        },
-        data: {
-            username: data.newUsername
-        }
-    });
-}));
+// app.put('/upDateData',async(req,res)=>{
+//     const data = req.body 
+//     await prisma.signUp.update({
+//         where:{
+//             username: data.username
+//         },
+//         data:{
+//             username: data.newUsername
+//         }
+//     })
+// })
 app.listen(3000);
