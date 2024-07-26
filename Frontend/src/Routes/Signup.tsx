@@ -20,7 +20,6 @@ const SignUp = ()=>{
             password: password
        })
 
-       console.log(res)
        navigate('/home')
        localStorage.setItem('username',username)
     }

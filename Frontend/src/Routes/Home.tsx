@@ -29,7 +29,6 @@ const Home = ()=>{
   if(user === null){
      return navigate('/')
   }
-  console.log(user)
 
   const handleClick=async()=>{
 
@@ -57,7 +56,6 @@ const Home = ()=>{
       const imgUrl = URL.createObjectURL(response)
       setImg(imgUrl)
       setLoading(false)
-      console.log(response)
 
       await axios.post('http://localhost:3000/promptData',{
          user: user,

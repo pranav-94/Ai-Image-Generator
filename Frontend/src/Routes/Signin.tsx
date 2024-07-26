@@ -2,6 +2,8 @@ import { useState } from "react"
 import axios from 'axios'
 import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
+import { ToastContainer,toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const SignIn = ()=>{
 
@@ -10,14 +12,20 @@ const SignIn = ()=>{
     const navigate = useNavigate()
 
     const handleClick = async()=>{
+        try{
      const res = await axios.post(`http://localhost:3000/signIn`,{
             username: username,
             password: password
        })
 
-       console.log(res)
        navigate('/home')
        localStorage.setItem('username',username)
+    }
+    catch(err:any){
+        if(err.response.status === 400){
+            toast(err.response.data.msg)
+        }
+    }
     }
 
 
@@ -42,10 +50,9 @@ const SignIn = ()=>{
 
         </div>
         </div>
+        <ToastContainer/>
         </>
     )
 }
-
-
 
 export default SignIn

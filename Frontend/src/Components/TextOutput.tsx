@@ -6,11 +6,8 @@ const TextOutput = ({text,textInput})=>{
 const mode = useRecoilValue(modeAtom)
 const username = localStorage.getItem('username')
 const logo = username?.slice(0,1)
-const userIP = document.getElementById("userIP")?.innerHTML
-const aiIP = document.getElementById("aiIP")?.innerHTML
-console.log(userIP)
-console.log(aiIP)
-
+// const userIP = document.getElementById("userIP")?.innerHTML
+// const aiIP = document.getElementById("aiIP")?.innerHTML
 
     return(
         <div className={`w-[100%] flex items-center flex-col h-[400px] bg-slate-100 overflow-scroll mb-7 ${mode===true ? "bg-slate-800 text-slate-100" : ""}`}>

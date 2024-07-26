@@ -4,7 +4,6 @@ import RecentText from "./RecentSearchText"
 
 const Navbar = ({mode})=>{
     const location = useLocation()
-    console.log(location)
     const username = localStorage.getItem('username')
     const logo = username?.slice(0,1)
 

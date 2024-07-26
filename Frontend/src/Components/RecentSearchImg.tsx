@@ -20,7 +20,6 @@ const Recent = ()=>{
            })
 
             setPrompt(response.data)
-            console.log(response)
         }
         recent()
     },[])

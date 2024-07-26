@@ -22,7 +22,6 @@ const TextGen = ()=>{
      }
 
     async function generateAnswer() {
-        console.log("loading..");
         setConstIP(input)
         const response = await axios({
             url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_KEY}`,
@@ -48,7 +47,6 @@ const TextGen = ()=>{
         }
         let newArr2 = newArray.split("*").join("</br>")
         setTextOutput(newArr2);
-        console.log(newArray)
 
             await axios.post('http://localhost:3000/textData',{
                 username: username,
