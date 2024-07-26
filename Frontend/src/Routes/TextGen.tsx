@@ -4,17 +4,22 @@ import Navbar from '../Components/Navbar';
 import NavItems from '../Components/NavItemsMobile';
 import TextOutput from '../Components/TextOutput';
 import Mode from '../Components/Mode';
-import {useRecoilValue} from 'recoil'
-import { modeAtom } from '../Recoil/atoms';
+import {useRecoilState, useRecoilValue} from 'recoil'
+import { modeAtom,textInputAtom,textOutputAtom } from '../Recoil/atoms';
+import { useNavigate } from 'react-router-dom';
 
 const TextGen = ()=>{
     const [click,setClick] = useState(false)
     const [input, setInput ] = useState('')
-    const [textOutput,  setTextOutput]:any = useState("")
-    const [constIP,setConstIP] = useState('')
+    const navigate = useNavigate()
+    const [textOutput,  setTextOutput]:any = useRecoilState(textOutputAtom)
+    const [constIP,setConstIP] = useRecoilState(textInputAtom)
     const mode = useRecoilValue(modeAtom)
     const GEMINI_KEY = import.meta.env.REACT_APP_GEMINI_API_KEY
     const username = localStorage.getItem('username')
+    if(username === null){
+        return navigate('/')
+     }
 
     async function generateAnswer() {
         console.log("loading..");
@@ -65,8 +70,8 @@ const TextGen = ()=>{
    <div className="w-[100%] h-[100px] flex justify-between items-center ">
       <p className="md:ml-[100px] ml-[30px]">Ai TExt Generator</p>
       <div className="flex ">
+      <p onClick={handleNav} className="md:hidden mr-5">Menu</p>
        <Mode/>
-      <p onClick={handleNav} className="md:hidden  mr-[30px]">Menu</p>
 
       </div>
    </div >
@@ -75,11 +80,11 @@ const TextGen = ()=>{
      }
    <div id='Hello'>
     <TextOutput text={textOutput} textInput={constIP}/>
- <div className='flex justify-center'>
-    <input className='w-[80%] h-[40px] pl-2 rounded-full bg-slate-400 outline-none' type="text" onChange={(e)=>{
+ <div className='flex justify-center mb-5 md:mb-0'>
+    <input className={`w-[80%] h-[40px] pl-2 rounded-full text-slate-800 bg-slate-400 outline-none placeholder:text-slate-600 ${mode===true ? "bg-slate-600 placeholder:text-slate-200" : ""}`} type="text" placeholder='Enter Message Here' onChange={(e)=>{
       setInput(e.target.value)
-    }} placeholder='Message here'/>
-    <button className='w-[50px] ml-2 h-[40px] md:w-[55px] bg-slate-800 text-white rounded-full' onClick={generateAnswer}>click</button>
+    }} />
+    <button className={`w-[50px] ml-2 h-[40px] md:w-[55px] bg-slate-800 text-white rounded-full ${mode===true ? "bg-teal-500 text-black" : ""}`} onClick={generateAnswer}>click</button>
     </div>
    </div>
   </div>

@@ -1,5 +1,9 @@
+import {  useRecoilValue } from "recoil"
+import { modeAtom } from "../Recoil/atoms"
+
 const TextOutput = ({text,textInput})=>{
 
+const mode = useRecoilValue(modeAtom)
 const username = localStorage.getItem('username')
 const logo = username?.slice(0,1)
 const userIP = document.getElementById("userIP")?.innerHTML
@@ -9,8 +13,8 @@ console.log(aiIP)
 
 
     return(
-        <div className="w-[100%] flex items-center flex-col h-[400px] bg-slate-100 overflow-scroll">
-        <div className="w-[70%] mt-5 mb-10">
+        <div className={`w-[100%] flex items-center flex-col h-[400px] bg-slate-100 overflow-scroll mb-7 ${mode===true ? "bg-slate-800 text-slate-100" : ""}`}>
+        <div className="w-[70%] mt-5">
             <div>
                 <div className="flex items-center">
             <p className="w-[40px] h-[40px] rounded-full bg-red-500 text-slate-200 flex justify-center items-center text-[22px]">{logo}</p>

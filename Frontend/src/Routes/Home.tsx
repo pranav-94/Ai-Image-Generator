@@ -8,14 +8,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import Download from "../Components/DownloadImg";
 import Mode from "../Components/Mode";
 import {useRecoilState,useRecoilValue} from 'recoil'
-import { modeAtom } from '../Recoil/atoms'
+import { modeAtom,imgPromptsAtom, imgUrlAtom,loadingAtom } from '../Recoil/atoms'
 // import { MyContext } from "../Recoil/ModeContext";
 
 const Home = ()=>{
 
-  const [img ,setImg ] = useState('')
-  const [input,setInput] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [img ,setImg ] = useRecoilState(imgUrlAtom)
+  const [input,setInput] = useRecoilState(imgPromptsAtom)
+  const [loading, setLoading] = useRecoilState(loadingAtom)
   const [click,setClick] = useState(false)
   const mode = useRecoilValue(modeAtom)
   // console.log(mode)
@@ -80,7 +80,7 @@ const Home = ()=>{
     <div className= {`md:w-[75%] flex flex-col sticky top-0 md:h-[700px] `}>
     <div >
      <div className="w-[100%] h-[100px] flex justify-between items-center ">
-        <p className="md:ml-[100px] ml-[30px]">Ai Image Generator</p>
+        <p className="md:ml-[100px] ml-[30px]">PixelAlchemy</p>
         <div className="flex ">
         {/* <p className="flex md:mr-[100px]" onClick={handleMode}>Mode</p> */}
         <p onClick={handleNav} className="md:hidden  mr-[30px]">Menu</p>
@@ -99,7 +99,10 @@ const Home = ()=>{
       {
         loading===true ? <p>loading...</p> : <p></p>
       }
+      {
+        img=== ''?<div className="w-[350px] h-[350px] md:w-[400px] md:h-[400px] rounded-md border-[1px] border-slate-600"></div>:
        <img src={`${img}`} className="w-[350px] h-[350px] md:w-[400px] md:h-[400px] rounded-md" />
+      }
        {
         img==='' ? 
         <></> : <Download img={img} mode={mode}/>

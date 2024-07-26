@@ -119,6 +119,11 @@ app.delete('/deleteUser', (req, res) => __awaiter(void 0, void 0, void 0, functi
             promptUser: data.username
         }
     });
+    const deleteUserTexts = yield prisma.textData.deleteMany({
+        where: {
+            promptUser: data.username
+        }
+    });
     res.status(200).json({
         msg: 'done',
         data: deletedRecord
@@ -140,12 +145,23 @@ app.post('/textData', (req, res) => __awaiter(void 0, void 0, void 0, function* 
     res.send(checkCreate);
 }));
 app.get('/userTexts', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const data = req.params;
+    const data = req.query.user;
     const userText = yield prisma.textData.findMany({
-    // where :{
-    //     promptUser: data.username
-    // }
+        where: {
+            promptUser: data
+        }
     });
     res.send(userText);
+}));
+app.put('/upDateData', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const data = req.body;
+    yield prisma.signUp.update({
+        where: {
+            username: data.username
+        },
+        data: {
+            username: data.newUsername
+        }
+    });
 }));
 app.listen(3000);

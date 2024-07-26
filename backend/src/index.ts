@@ -139,6 +139,12 @@ app.delete('/deleteUser',async(req,res)=>{
         }
     })
 
+    const deleteUserTexts = await prisma.textData.deleteMany({
+        where:{
+            promptUser: data.username
+        }
+    })
+
     res.status(200).json({
         msg: 'done',
         data: deletedRecord
@@ -168,15 +174,29 @@ app.post('/textData',async(req,res)=>{
 
 app.get('/userTexts',async(req,res)=>{
 
-    const data:any = req.params
+    const data:any = req.query.user
 
     const userText = await prisma.textData.findMany({
-        // where :{
-        //     promptUser: data.username
-        // }
+        where :{
+            promptUser: data
+        }
     })
 
     res.send(userText)
 })
+
+// app.put('/upDateData',async(req,res)=>{
+//     const data = req.body 
+
+//     await prisma.signUp.update({
+//         where:{
+//             username: data.username
+//         },
+//         data:{
+//             username: data.newUsername
+//         }
+//     })
+// })
+
 
 app.listen(3000)

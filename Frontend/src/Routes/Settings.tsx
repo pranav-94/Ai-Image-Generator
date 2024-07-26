@@ -14,6 +14,9 @@ const Settings  = ()=>{
     const navigate = useNavigate()
 
     const username = localStorage.getItem('username')
+  //   if(username === null){
+  //     return navigate('/')
+  //  }
 
 const handleClick = async()=>{
    const deleteData = await axios.delete('http://localhost:3000/deleteUser',{
@@ -44,7 +47,7 @@ const handleClick = async()=>{
      }
    <div className="w-[100%] h-[487px]  justify-start flex flex-col">
 
-    <div className="flex justify-evenly">
+    <div className="flex justify-evenly mt-5">
            <p className="text-[20px]">Delete User Account</p>
           <button className={`rounded-md  w-[150px] h-[35px] ${mode===true ? "bg-teal-400 text-slate-900" : "bg-slate-900 text-white "}`} onClick={handleClick}>Delete</button>
           </div>
