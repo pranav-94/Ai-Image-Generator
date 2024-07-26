@@ -18,14 +18,12 @@ const client_1 = require("@prisma/client");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const zod_1 = __importDefault(require("./zod"));
-const auth_1 = __importDefault(require("./auth"));
 const prisma = new client_1.PrismaClient();
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
 const JWT_KEY = process.env.JWT_KEY;
-console.log(JWT_KEY);
 app.get('/', (req, res) => {
     res.send('hello world');
 });
@@ -79,7 +77,7 @@ app.post('/signIn', (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         token: token
     });
 }));
-app.get('/allData', auth_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.get('/allData', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const allData = yield prisma.signUp.findMany();
     res.json({
         msg: 'success',

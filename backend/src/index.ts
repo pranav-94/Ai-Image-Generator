@@ -14,7 +14,6 @@ app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 
 const JWT_KEY:any = process.env.JWT_KEY
-console.log(JWT_KEY)
 
 app.get('/',(req,res)=>{
     res.send('hello world')
@@ -84,7 +83,7 @@ app.post('/signIn',async(req,res)=>{
     })
 })
 
-app.get('/allData',auth,async(req,res)=>{
+app.get('/allData',async(req,res)=>{
 
     const allData = await prisma.signUp.findMany()
 

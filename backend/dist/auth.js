@@ -16,7 +16,6 @@ const auth = (req, res, next) => {
             return res.json({ msg: 'wrong token' });
         }
     });
-    console.log(verify);
     next();
 };
 exports.default = auth;
