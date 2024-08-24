@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 import {  imgUrlAtom, loadingAtom } from '../Recoil/atoms'
 import {useRecoilState} from 'recoil'
 
@@ -9,6 +9,7 @@ const Recent = ()=>{
     const [loading, setLoading] = useRecoilState(loadingAtom)
     const [img ,setImg ] = useRecoilState(imgUrlAtom)
     const username = localStorage.getItem('username')
+    console.log(loading,img)
 
     const apiKey = import.meta.env.REACT_APP_API_KEY
     const apiURL = import.meta.env.REACT_APP_API_URL

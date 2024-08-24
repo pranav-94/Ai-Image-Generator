@@ -2,8 +2,6 @@ import { useState } from "react"
 import axios from 'axios'
 import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
-import { modeAtom } from "../Recoil/atoms"
-import { useRecoilValue } from "recoil"
 import { ToastContainer,toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -12,12 +10,12 @@ const SignUp = ()=>{
     const [username,setUsername]= useState('')
     const [email,setEmail ] = useState('')
     const [password, setPassword] = useState('')
-    const mode = useRecoilValue(modeAtom)
+    // const mode = useRecoilValue(modeAtom)
     const navigate = useNavigate()
 
     const handleClick = async()=>{
     try{
-         const res = await axios.post(`https://ai-image-generator-woye.onrender.com/signUp`,{
+          await axios.post(`https://ai-image-generator-woye.onrender.com/signUp`,{
             username: username,
             email: email,
             password: password

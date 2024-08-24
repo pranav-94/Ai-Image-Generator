@@ -2,10 +2,18 @@ import { useLocation, useNavigate } from "react-router-dom"
 import Recent from "./RecentSearchImg"
 import RecentText from "./RecentSearchText"
 
-const Navbar = ({mode})=>{
+type setMode = {
+    mode: boolean
+}
+
+type setUsername = {
+    username: string
+}
+
+const Navbar:React.FC<setMode> = ({mode})=>{
     const location = useLocation()
     const username = localStorage.getItem('username')
-    const logo = username?.slice(0,1)
+    const logo:any = username?.slice(0,1)
 
     return(
         <>
@@ -22,7 +30,7 @@ const Navbar = ({mode})=>{
     )
 }
 
-const TopSection = ({username})=>{
+const TopSection:React.FC<setUsername> = ({username})=>{
     return(
         <div className="w-[100%] h-[100px] flex justify-evenly items-center">
            <p>AI Byte</p>
@@ -31,7 +39,7 @@ const TopSection = ({username})=>{
     )
 }
 
-const MiddleSection = ({mode})=>{
+const MiddleSection:React.FC<setMode> = ({mode})=>{
     const navigate = useNavigate()
 
     const handleImg = ()=>{
@@ -55,7 +63,7 @@ const MiddleSection = ({mode})=>{
     )
     }
 
-    const LogOut = ({mode})=>{
+    const LogOut:React.FC<setMode> = ({mode})=>{
         const navigate = useNavigate()
 
         const handleLog = ()=>{

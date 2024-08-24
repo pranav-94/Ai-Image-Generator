@@ -1,4 +1,9 @@
-const Download = ({img,mode})=>{
+type ImgMode = {
+    img: string,
+    mode: boolean
+}
+
+const Download:React.FC<ImgMode> = ({img,mode})=>{
     const handleDownload = ()=>{
         const a = document.createElement('a')
         a.href = img 

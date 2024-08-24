@@ -9,6 +9,7 @@ const RecentText = ()=>{
     const username = localStorage.getItem('username')
     const [textOutput,  setTextOutput]:any = useRecoilState(textOutputAtom)
     const [constIP,setConstIP] = useRecoilState(textInputAtom)
+    console.log(textOutput,constIP);
     const GEMINI_KEY = import.meta.env.REACT_APP_GEMINI_API_KEY
 
     useEffect(()=>{
@@ -22,9 +23,9 @@ const RecentText = ()=>{
         recent()
     },[])
 
-    const handleData = async()=>{
+    // const handleData = async()=>{
      
-    }
+    // }
 
     return(
         <div className='w-[90%]'>
