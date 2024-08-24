@@ -9,10 +9,16 @@ const App = ()=>{
     <>
       <Routes>
         <Route Component={SignUp} path="/"/>
-        <Route Component={SignIn} path="/signin"/>        
+        <Route Component={SignIn} path="/signin"/>   
+        { 
+          //@ts-ignore
         <Route Component={Home} path="/home"/>
+        }
         <Route Component={Settings} path="/settings"/>
+        {
+        //@ts-ignore
         <Route Component={TextGen} path="/Text-Generator"/>
+}
       </Routes>
     </>
   )

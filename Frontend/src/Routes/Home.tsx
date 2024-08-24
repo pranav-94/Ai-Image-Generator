@@ -11,7 +11,7 @@ import {useRecoilState,useRecoilValue} from 'recoil'
 import { modeAtom,imgPromptsAtom, imgUrlAtom,loadingAtom } from '../Recoil/atoms'
 // import { MyContext } from "../Recoil/ModeContext";
 
-const Home = ()=>{
+const Home  = ()=>{
 
   const [img ,setImg ] = useRecoilState(imgUrlAtom)
   const [input,setInput] = useRecoilState(imgPromptsAtom)
@@ -73,6 +73,7 @@ const Home = ()=>{
    }
 
   return(
+    <>
     <div className={`${mode===true? 'bg-slate-800 h-[900px] text-slate-100' : 'bg-slate-100 text-slate-900'} md:w-[100%] md:flex`}>
       <Navbar mode={mode}/>
     <div className= {`md:w-[75%] flex flex-col sticky top-0 md:h-[700px] `}>
@@ -111,6 +112,7 @@ const Home = ()=>{
        </div>
        <ToastContainer/>
        </div>
+       </>
   )
 }
 
