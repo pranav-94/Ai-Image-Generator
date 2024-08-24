@@ -57,7 +57,7 @@ const Home = ()=>{
       setImg(imgUrl)
       setLoading(false)
 
-      await axios.post('http://localhost:3000/promptData',{
+      await axios.post('https://ai-image-generator-woye.onrender.com/promptData',{
          user: user,
          Text: input
       })
@@ -73,7 +73,7 @@ const Home = ()=>{
    }
 
   return(
-    <div className={`${mode===true? 'bg-slate-800 text-slate-100' : 'bg-slate-100 text-slate-900'} md:w-[100%] md:flex`}>
+    <div className={`${mode===true? 'bg-slate-800 h-[900px] text-slate-100' : 'bg-slate-100 text-slate-900'} md:w-[100%] md:flex`}>
       <Navbar mode={mode}/>
     <div className= {`md:w-[75%] flex flex-col sticky top-0 md:h-[700px] `}>
     <div >

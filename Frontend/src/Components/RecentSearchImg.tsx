@@ -32,7 +32,7 @@ const Recent = ()=>{
         <div className='w-[90%]'>
            <p className='text-[25px]'>Recent</p>
            {
-              prompt.map((item)=>{
+              prompt.map((item:any)=>{
                 return(
                     <>
                        <p className=" h-[35px] mt-2 mb-2 text-[16px] flex items-center p-3 w-max hover:bg-slate-300 rounded-md  cursor-pointer" id="useText" onClick={()=>{

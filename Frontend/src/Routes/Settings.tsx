@@ -19,7 +19,7 @@ const Settings  = ()=>{
   //  }
 
 const handleClick = async()=>{
-   const deleteData = await axios.delete('http://localhost:3000/deleteUser',{
+   const deleteData = await axios.delete('https://ai-image-generator-woye.onrender.com/deleteUser',{
        data:{ username :username}
     })
     localStorage.removeItem('username')

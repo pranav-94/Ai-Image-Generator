@@ -13,7 +13,7 @@ const SignIn = ()=>{
 
     const handleClick = async()=>{
         try{
-     const res = await axios.post(`http://localhost:3000/signIn`,{
+     const res = await axios.post(`https://ai-image-generator-woye.onrender.com/signIn`,{
             username: username,
             password: password
        })

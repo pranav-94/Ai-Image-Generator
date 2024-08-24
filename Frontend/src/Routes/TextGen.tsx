@@ -48,7 +48,7 @@ const TextGen = ()=>{
         let newArr2 = newArray.split("*").join("</br>")
         setTextOutput(newArr2);
 
-            await axios.post('http://localhost:3000/textData',{
+            await axios.post('https://ai-image-generator-woye.onrender.com/textData',{
                 username: username,
                 input: input,
                 output: response.data.candidates[0].content.parts[0].text

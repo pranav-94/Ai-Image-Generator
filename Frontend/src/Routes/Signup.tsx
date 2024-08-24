@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
 import { modeAtom } from "../Recoil/atoms"
 import { useRecoilValue } from "recoil"
+import { ToastContainer,toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const SignUp = ()=>{
 
@@ -14,7 +16,8 @@ const SignUp = ()=>{
     const navigate = useNavigate()
 
     const handleClick = async()=>{
-     const res = await axios.post(`http://localhost:3000/signUp`,{
+    try{
+         const res = await axios.post(`https://ai-image-generator-woye.onrender.com/signUp`,{
             username: username,
             email: email,
             password: password
@@ -23,9 +26,16 @@ const SignUp = ()=>{
        navigate('/home')
        localStorage.setItem('username',username)
     }
+    catch(err:any){
+        if(err.response.status === 400){
+            toast(err.response.data.msg)
+        }
+    }
+}
 
 
     return(
+        <>
         <div className="w-[100%] h-[550px]  flex flex-col items-center justify-evenly">
             <div className="text-center">
             <p className="text-[25px]">Sign-Up</p>
@@ -38,16 +48,18 @@ const SignUp = ()=>{
            </div>
            <div>
            <p>Email</p>
-           <input type="text" className="border-[1px] border-slate-700 outline-none pl-1 w-[250px] h-[30px]" onChange={e=>{setEmail(e.target.value)}} placeholder="Email"/>
+           <input type="text" className="border-[1px] border-slate-700 outline-none pl-1 w-[250px] h-[30px]" onChange={e=>{setEmail(e.target.value)}} placeholder="@mail.com"/>
            </div>
            <div>
            <p>Password</p>
-           <input type="text" className="border-[1px] border-slate-700 outline-none pl-1 w-[250px] h-[30px]" onChange={e=>{setPassword(e.target.value)}} placeholder="Password"/>
+           <input type="text" className="border-[1px] border-slate-700 outline-none pl-1 w-[250px] h-[30px]" onChange={e=>{setPassword(e.target.value)}} placeholder="Min 8 characters"/>
            </div>
            <button className="" onClick={handleClick}>Submit</button>
            <Link to={'/signin'} >Already have an account?</Link>
            </div>
         </div>
+    <ToastContainer/>
+    </>
     )
 }
 

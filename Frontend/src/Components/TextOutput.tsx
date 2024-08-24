@@ -1,7 +1,12 @@
 import {  useRecoilValue } from "recoil"
 import { modeAtom } from "../Recoil/atoms"
 
-const TextOutput = ({text,textInput})=>{
+type textOP = {
+    text: string,
+    textInput: string
+}
+
+const TextOutput:React.FC<textOP> = ({text,textInput})=>{
 
 const mode = useRecoilValue(modeAtom)
 const username = localStorage.getItem('username')
