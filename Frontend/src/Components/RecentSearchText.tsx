@@ -13,7 +13,7 @@ const RecentText = ()=>{
 
     useEffect(()=>{
         const recent =async()=>{
-           const response = await axios.get("https://ai-image-generator-woye.onrender.com//userTexts",{
+           const response = await axios.get("https://ai-image-generator-woye.onrender.com/userTexts",{
           params:{  user: username}
            })
 
@@ -61,7 +61,7 @@ const RecentText = ()=>{
                         setTextOutput(newArr2);
                         console.log(newArray)
                 
-                            await axios.post('https://ai-image-generator-woye.onrender.com//textData',{
+                            await axios.post('https://ai-image-generator-woye.onrender.com/textData',{
                                 username: username,
                                 input: item.promptText,
                                 output: response.data.candidates[0].content.parts[0].text

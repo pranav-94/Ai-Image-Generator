@@ -15,7 +15,7 @@ const Recent = ()=>{
 
     useEffect(()=>{
         const recent =async()=>{
-           const response = await axios.get("http://localhost:3000/userPrompts",{
+           const response = await axios.get("https://ai-image-generator-woye.onrender.com/userPrompts",{
           params:{  user: username}
            })
 
@@ -58,7 +58,7 @@ const Recent = ()=>{
                                   setLoading(false)
                                   console.log(response)
                             
-                                  await axios.post('http://localhost:3000/promptData',{
+                                  await axios.post('https://ai-image-generator-woye.onrender.com/promptData',{
                                      user: username,
                                      Text: item.promptText
                                   })
