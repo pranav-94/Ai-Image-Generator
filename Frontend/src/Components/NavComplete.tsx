@@ -1,16 +1,16 @@
-import axios from "axios"
+// import axios from "axios"
 import { useState } from "react"
 import Navbar from "../Components/Navbar"
 import NavItems from "../Components/NavItemsMobile"
 
 const NavComplete  = ()=>{
 
-    const[password,getPassword ] = useState('')
+    // const[password,getPassword ] = useState('')
     const [mode,setMode] = useState(false)
     const [click,setClick] = useState(false)
 
-    const username = localStorage.getItem('username')
-    console.log(getPassword)
+    // const username = localStorage.getItem('username')
+    // console.log(getPassword)
 
 // const handleClick = async()=>{
 //     await axios.delete('https://ai-image-generator-woye.onrender.com/deleteUser',{
