@@ -1,4 +1,3 @@
-import React from "react";
 import { Route,Routes } from "react-router-dom";
 import SignUp from "./Routes/Signup";
 import Home from "./Routes/Home";
@@ -13,7 +12,7 @@ const App = ()=>{
         <Route Component={SignIn} path="/signin"/>        
         <Route Component={Home} path="/home"/>
         <Route Component={Settings} path="/settings"/>
-        <Route element={<TextGen/>} path="/Text-Generator"/>
+        <Route Component={TextGen} path="/Text-Generator"/>
       </Routes>
     </>
   )

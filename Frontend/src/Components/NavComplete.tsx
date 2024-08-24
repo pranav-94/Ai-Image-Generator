@@ -12,7 +12,7 @@ const NavComplete  = ()=>{
     const username = localStorage.getItem('username')
 
 const handleClick = async()=>{
-    await axios.delete('https://ai-image-generator-woye.onrender.com//deleteUser',{
+    await axios.delete('https://ai-image-generator-woye.onrender.com/deleteUser',{
         username :username,
         password: password
     })
