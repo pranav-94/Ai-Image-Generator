@@ -1,15 +1,15 @@
-import axios from "axios"
-import { useState } from "react"
+// import axios from "axios"
+// import { useState } from "react"
 
-const UpDateData = ()=>{
-    const [user,setUser] = useState('')
-    const [pass,setPass] = useState('')
+// const UpDateData = ()=>{
+//     const [user,setUser] = useState('')
+//     const [pass,setPass] = useState('')
 
-    return(
-        <>
+//     return(
+//         <>
         
-        </>
-    )
-}
+//         </>
+//     )
+// }
 
-export default UpDateData
+// export default UpDateData
