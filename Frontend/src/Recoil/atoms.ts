@@ -2,7 +2,7 @@ import { atom } from "recoil";
 
 export const modeAtom = atom({
     key: 'mode',
-    default: false
+    default: true
 })
 
 export const imgPromptsAtom = atom({
