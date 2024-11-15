@@ -8,15 +8,18 @@ import userInfo from './zod'
 import auth from './auth'
 const prisma = new PrismaClient()
 const app = express()
+import dotenv from 'dotenv'
 
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
+dotenv.config()
 
 const JWT_KEY:any = process.env.JWT_KEY
 
 app.get('/',(req,res)=>{
-    res.send('hello world')
+    res.json({msg:process.env.DATABASE_URL})
+    console.log(process.env.DATABASE_URL)
 })
 
 app.post('/signUp',async (req,res)=>{
@@ -86,11 +89,19 @@ app.post('/signIn',async(req,res)=>{
 app.get('/allData',async(req,res)=>{
 
     const allData = await prisma.signUp.findMany()
+    console.log(process.env.DATABASE_URL)
 
+    try{
     res.json({
         msg: 'success',
         data: allData
     })
+}
+    catch(err){
+        res.json({
+            msg: err
+        })
+    }
 })
 
 app.post('/promptData',async(req,res)=>{

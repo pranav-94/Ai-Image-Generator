@@ -20,12 +20,15 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const zod_1 = __importDefault(require("./zod"));
 const prisma = new client_1.PrismaClient();
 const app = (0, express_1.default)();
+const dotenv_1 = __importDefault(require("dotenv"));
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
+dotenv_1.default.config();
 const JWT_KEY = process.env.JWT_KEY;
 app.get('/', (req, res) => {
-    res.send('hello world');
+    res.json({ msg: process.env.DATABASE_URL });
+    console.log(process.env.DATABASE_URL);
 });
 app.post('/signUp', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const userData = req.body;
@@ -79,10 +82,18 @@ app.post('/signIn', (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 }));
 app.get('/allData', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const allData = yield prisma.signUp.findMany();
-    res.json({
-        msg: 'success',
-        data: allData
-    });
+    console.log(process.env.DATABASE_URL);
+    try {
+        res.json({
+            msg: 'success',
+            data: allData
+        });
+    }
+    catch (err) {
+        res.json({
+            msg: err
+        });
+    }
 }));
 app.post('/promptData', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const PData = req.body;
