@@ -4,12 +4,15 @@ import Home from "./Routes/Home";
 import SignIn from "./Routes/Signin";
 import Settings from "./Routes/Settings";
 import TextGen from "./Routes/TextGen";
+import Landing from "./Routes/Landing";
+
 const App = ()=>{
   return(
     <>
       <Routes>
         <Route Component={SignUp} path="/"/>
-        <Route Component={SignIn} path="/signin"/>   
+        <Route Component={SignIn} path="/signin"/>
+        <Route Component={Landing} path="/landing"/>   
         { 
           //@ts-ignore
         <Route Component={Home} path="/home"/>
