@@ -10,9 +10,9 @@ const App = ()=>{
   return(
     <>
       <Routes>
-        <Route Component={SignUp} path="/"/>
+        <Route Component={SignUp} path="/signup"/>
         <Route Component={SignIn} path="/signin"/>
-        <Route Component={Landing} path="/landing"/>   
+        <Route Component={Landing} path="/"/>   
         { 
           //@ts-ignore
         <Route Component={Home} path="/home"/>
