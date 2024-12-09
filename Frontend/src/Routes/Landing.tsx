@@ -135,15 +135,8 @@ const Landing: React.FC = () => {
               </div>
               <div className="w-full max-w-sm space-y-2">
                 <form onSubmit={handlePromptSubmit} className="flex flex-col space-y-2">
-                  <Input
-                    className="max-w-lg flex-1"
-                    placeholder="Enter your prompt"
-                    value={prompt}
-                    onChange={(e) => setPrompt(e.target.value)}
-                    required
-                  />
                   <Button type="submit">
-                    <Send className="mr-2 h-4 w-4" /> Generate
+                    <Send className="mr-2 h-4 w-4" /> Sign Up
                   </Button>
                 </form>
               </div>
