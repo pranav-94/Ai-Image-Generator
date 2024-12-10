@@ -6,6 +6,7 @@ import NavItems from "../Components/NavItemsMobile";
 import { ToastContainer,toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Download from "../Components/DownloadImg";
+import { SunMoon } from 'lucide-react';
 import Mode from "../Components/Mode";
 import {useRecoilState,useRecoilValue} from 'recoil'
 import { modeAtom,imgPromptsAtom, imgUrlAtom,loadingAtom } from '../Recoil/atoms'
@@ -74,7 +75,7 @@ const Home  = ()=>{
 
   return(
     <>
-    <div className={`${mode===true? 'bg-slate-800 h-[900px] text-slate-100' : 'bg-slate-100 text-slate-900'} md:w-[100%] md:flex`}>
+    <div className={`${mode===true? 'bg-gradient-to-br from-gray-800 via-gray-700 to-gray-900 text-slate-100' : 'bg-gradient-to-br from-blue-100 via-white to-blue-200 text-slate-900'} md:w-[100%] md:flex`}>
       <Navbar mode={mode}/>
     <div className= {`md:w-[75%] flex flex-col sticky top-0 md:h-[700px] `}>
     <div >
