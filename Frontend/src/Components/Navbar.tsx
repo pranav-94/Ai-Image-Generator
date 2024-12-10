@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom"
 import Recent from "./RecentSearchImg"
 import RecentText from "./RecentSearchText"
+import { ImageIcon, MessageSquare, Settings, Sparkles } from 'lucide-react'
 
 type setMode = {
     mode: boolean
@@ -56,9 +57,18 @@ const MiddleSection:React.FC<setMode> = ({mode})=>{
 
     return(
         <div className="w-[90%] text-[18px] h-[200px] flex flex-col justify-evenly items-start  ">
-          <p onClick={handleImg} className={`hover:bg-slate-500 border-[1px] border-slate-100 w-[150px] pl-2  h-[40px] rounded-md flex items-center cursor-pointer justify-start ${mode===true? "hover:bg-slate-100 border-slate-100 border-[1px] hover:text-slate-900": "hover:bg-slate-900 hover:text-slate-200" } transition-all duration-500 ease-in-out`}>Image Generator</p>
-          <p className={`hover:bg-slate-500 border-[1px] border-slate-100 w-[150px] pl-2  h-[40px] rounded-md flex items-center cursor-pointer justify-start ${mode===true? "hover:bg-slate-100 border-slate-100 border-[1px] hover:text-slate-900": "hover:bg-slate-900 hover:text-slate-200" } transition-all duration-500 ease-in-out `} onClick={handleText}>Text Generator</p>
-          <p className={`hover:bg-slate-500 border-[1px] border-slate-100 w-[150px] pl-2  h-[40px] rounded-md flex items-center cursor-pointer justify-start ${mode===true? "hover:bg-slate-100 border-slate-100 border-[1px] hover:text-slate-700": "hover:bg-slate-900 hover:text-slate-200" } transition-all duration-500 ease-in-out`} onClick={handleSettings}>Settings</p>
+          <div className="flex justify-center items-center">
+          <ImageIcon/>
+          <p onClick={handleImg} className={`  w-[150px] pl-2  h-[40px] rounded-md flex items-center cursor-pointer justify-start ${mode===true? "  text-slate-100": "text-slate-700 " } transition-all duration-500 ease-in-out`}>Image Generator</p>
+          </div>
+          <div className="flex justify-center items-center">
+            <MessageSquare/>
+          <p className={`  w-[150px] pl-2  h-[40px] rounded-md flex items-center cursor-pointer justify-start ${mode===true? "  text-slate-100": "text-slate-700 " } transition-all duration-500 ease-in-out `} onClick={handleText}>Text Generator</p>
+          </div>
+          <div className="flex justify-center items-center">
+            <Settings/>
+          <p className={`  w-[150px] pl-2  h-[40px] rounded-md flex items-center cursor-pointer justify-start ${mode===true? "  text-slate-100": "text-slate-700 " } transition-all duration-500 ease-in-out`} onClick={handleSettings}>Settings</p>
+        </div>
         </div>
     )
     }
@@ -74,7 +84,7 @@ const MiddleSection:React.FC<setMode> = ({mode})=>{
         return(
             <>
             <div className=" w-[85%] mt-5 mb-5">
-            <button className={`rounded-md  w-[150px] h-[35px] ${mode===true ? "bg-teal-400 text-slate-900" : "bg-slate-900 text-white "}`} onClick={handleLog}>Log-out</button>
+            <button className={`rounded-md  w-[150px] h-[35px] ${mode===true ? "bg-teal-400 text-slate-900" : " "}`} onClick={handleLog}>Log-out</button>
             </div>
             </>
         )

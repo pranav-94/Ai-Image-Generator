@@ -5,8 +5,8 @@ import Navbar from "../Components/Navbar";
 import NavItems from "../Components/NavItemsMobile";
 import { ToastContainer,toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { usePollinationsImage } from '@pollinations/react';
 import Download from "../Components/DownloadImg";
-import { SunMoon } from 'lucide-react';
 import Mode from "../Components/Mode";
 import {useRecoilState,useRecoilValue} from 'recoil'
 import { modeAtom,imgPromptsAtom, imgUrlAtom,loadingAtom } from '../Recoil/atoms'
@@ -30,40 +30,30 @@ const Home  = ()=>{
   if(user === null){
      return navigate('/')
   }
+    //@ts-ignore
+    const imageUrl = usePollinationsImage(`${input}`, {
+    width: 768,
+    height: 768,
+    seed: 42,
+    model: 'flux'
+    });
+    console.log(imageUrl)
 
   const handleClick=async()=>{
-
+    setLoading(true)
     if(input === ''){
      return toast('Enter prompt first')
     }
 
-    setLoading(true)
-    async function query(data:any) {
-      const response = await fetch(
-        `${apiURL}`,
-        {
-          headers: {
-            Authorization: "Bearer "+`${apiKey}`,
-            "Content-Type": "application/json",
-          },
-          method: "POST",
-          body: JSON.stringify(data),
-        }
-      );
-      const result = await response.blob();
-      return result;
-    }
-    query({"inputs": input}).then(async(response) => {
-      const imgUrl = URL.createObjectURL(response)
-      setImg(imgUrl)
-      setLoading(false)
-
-      await axios.post('https://ai-image-generator-woye.onrender.com/promptData',{
+    if(imageUrl){
+    setLoading(false)
+    setImg(imageUrl)
+    await axios.post('https://ai-image-generator-woye.onrender.com/promptData',{
          user: user,
          Text: input
       })
-    });
   }
+}
 
     // const handleMode =()=>{
     //   setMode(!mode)
@@ -75,7 +65,7 @@ const Home  = ()=>{
 
   return(
     <>
-    <div className={`${mode===true? 'bg-gradient-to-br from-gray-800 via-gray-700 to-gray-900 text-slate-100' : 'bg-gradient-to-br from-blue-100 via-white to-blue-200 text-slate-900'} md:w-[100%] md:flex`}>
+    <div className={`${mode===true? 'bg-gradient-to-br from-[#161e2b] via-[#1d2e44] to-[#131a2d] text-slate-100' : 'bg-gradient-to-br from-blue-200 via-white to-blue-100 text-slate-900'} md:w-[100%] md:flex`}>
       <Navbar mode={mode}/>
     <div className= {`md:w-[75%] flex flex-col sticky top-0 md:h-[700px] `}>
     <div >
@@ -92,7 +82,7 @@ const Home  = ()=>{
      }
      <div className="w-[100%]  h-auto flex flex-col items-center justify-evenly">
       <div className="md:w-[80%] w-[100%]  h-[130px] items-center flex flex-col md:items-end justify-evenly ">
-       <input className=" md:w-[100%] w-[80%] rounded-md pl-[10px] h-[40px] bg-slate-600" type="text" placeholder="Enter a prompt to generate an image" onChange={(e)=>{setInput(e.target.value)}}/>
+       <input className=" md:w-[100%] w-[80%] rounded-md pl-[10px] h-[60px] bg-slate-900 text-white" type="text" placeholder="Enter a prompt to generate an image" onChange={(e)=>{setInput(e.target.value)}}/>
        <button className={`rounded-md  w-[150px] h-[35px] ${mode===true ? "bg-teal-400 text-slate-900" : "bg-slate-900 text-white"}`} onClick={handleClick}>Show Result</button>
        </div>
       <div className="w-[100%] flex-col pb-[50px]  h-auto  flex items-center justify-evenly">
